@@ -1,41 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components/macro'
-import getRandomName from '../services/getRandomName'
 import Button from './Button'
 
-export default function Register({ onRegister }) {
-  const [randomName, setRandomName] = useState('')
+export default function Register({ onLogin }) {
   const [user, setUser] = useState({
-    username: '',
     email: '',
     password: '',
   })
 
-  useEffect(() => {
-    getRandomName()
-      .then(setRandomName)
-      .catch(() => {})
-  }, [])
-
   return (
     <Form onSubmit={handleSubmit}>
       <label>
-        Choose a name:
+        Email:
         <input
           onChange={handleChange}
-          value={user.username}
-          name="username"
-          placeholder={randomName}
-        />
-      </label>
-      <label>
-        Your email:
-        <input
-          onChange={handleChange}
+          value={user.email}
           name="email"
           type="email"
-          value={user.email}
-          placeholder={`${randomName}@coffee.de`}
+          placeholder="jon@doe.com"
         />
       </label>
       <label>
@@ -49,7 +31,7 @@ export default function Register({ onRegister }) {
         />
       </label>
 
-      <Button>Register!</Button>
+      <Button>Let's go!</Button>
     </Form>
   )
 
@@ -61,7 +43,7 @@ export default function Register({ onRegister }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    onRegister(user)
+    onLogin(user)
   }
 }
 

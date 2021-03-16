@@ -72,7 +72,7 @@ export default function Board({ user, onLogout }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log(user)
+
     const form = event.target
     const { text } = form.elements
     postCard({ text: text.value, author: user.id }).then(newCard =>
