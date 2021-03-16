@@ -4,7 +4,7 @@ import loadFromLocal from '../lib/loadFromLocal'
 import saveToLocal from '../lib/saveToLocal'
 import postUser from '../services/postUser'
 import Board from './Board'
-import Login from './Login'
+import Register from './Register'
 
 function App() {
   const [user, setUser] = useState(loadFromLocal({}))
@@ -20,7 +20,7 @@ function App() {
         {user ? (
           <Board user={user} onLogout={() => setUser(null)} />
         ) : (
-          <Login onSubmit={createUser} />
+          <Register onSubmit={createUser} />
         )}
       </Grid>
     )

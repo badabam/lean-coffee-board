@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import getRandomName from '../services/getRandomName'
 import Button from './Button'
 
-export default function Login({ onSubmit }) {
+export default function Register({ onSubmit }) {
   const [randomName, setRandomName] = useState('')
   const [user, setUser] = useState({
     username: '',
