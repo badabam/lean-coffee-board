@@ -18,6 +18,18 @@ export default function Login({ onSubmit }) {
         Choose a name:
         <input name="name" placeholder={randomName} />
       </label>
+      <label>
+        Your email:
+        <input
+          name="email"
+          type="email"
+          placeholder={`${randomName}@coffee.de`}
+        />
+      </label>
+      <label>
+        A password:
+        <input name="password" type="password" placeholder="..." />
+      </label>
 
       <Button>Let's go!</Button>
     </Form>
@@ -25,10 +37,12 @@ export default function Login({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
+    const form = event.target
+    const { name, email, password } = form.elements
     onSubmit({
-      password: '2Hamburg',
-      username: 'Dumbledore',
-      email: 'dum@bledore.com',
+      password: password.value,
+      username: name.value,
+      email: email.value,
     })
   }
 }
