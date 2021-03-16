@@ -12,7 +12,7 @@ Board.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
     token: PropTypes.string,
-    _id: PropTypes.string,
+    id: PropTypes.string,
   }),
   onLogout: PropTypes.func,
 }
@@ -22,7 +22,7 @@ export default function Board({ user, onLogout }) {
 
   useEffect(() => {
     getCards(user.token).then(data => setCards([...data]))
-  }, [])
+  }, [user.token])
 
   return (
     <BoardWrapper>

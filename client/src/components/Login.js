@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import styled from 'styled-components/macro'
+import validateUser from '../services/validation'
 import Button from './Button'
 
 export default function Register({ onLogin }) {
+  const [error, setError] = useState(false)
   const [user, setUser] = useState({
     email: '',
     password: '',
@@ -30,7 +32,7 @@ export default function Register({ onLogin }) {
           placeholder="..."
         />
       </label>
-
+      {error && <small>Please fill out the form correctly</small>}
       <Button>Let's go!</Button>
     </Form>
   )
@@ -43,7 +45,11 @@ export default function Register({ onLogin }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    onLogin(user)
+    if (validateUser(user)) {
+      onLogin(user)
+    } else {
+      setError(true)
+    }
   }
 }
 

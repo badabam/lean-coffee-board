@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import getRandomName from '../services/getRandomName'
+import validateUser from '../services/validation'
 import Button from './Button'
 
 export default function Register({ onRegister }) {
+  const [error, setError] = useState(false)
   const [randomName, setRandomName] = useState('')
   const [user, setUser] = useState({
     username: '',
@@ -48,7 +50,7 @@ export default function Register({ onRegister }) {
           placeholder="..."
         />
       </label>
-
+      {error && <small>Please fill out the form correctly</small>}
       <Button>Register!</Button>
     </Form>
   )
@@ -61,7 +63,11 @@ export default function Register({ onRegister }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    onRegister(user)
+    if (validateUser(user)) {
+      onRegister(user)
+    } else {
+      setError(true)
+    }
   }
 }
 
