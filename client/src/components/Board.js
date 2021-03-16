@@ -43,7 +43,11 @@ export default function Board({ user, onLogout }) {
         <Spacer />
       </CardGrid>
       <Form onSubmit={handleSubmit}>
-        <input autoFocus placeholder={`${user.name} says ... `} name="text" />
+        <input
+          autoFocus
+          placeholder={`${user.username} says ... `}
+          name="text"
+        />
         <Button>Add Card</Button>
       </Form>
     </BoardWrapper>

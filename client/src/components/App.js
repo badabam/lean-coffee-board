@@ -7,7 +7,7 @@ import Board from './Board'
 import Login from './Login'
 
 function App() {
-  const [user, setUser] = useState(loadFromLocal('user'))
+  const [user, setUser] = useState(loadFromLocal([]))
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -26,8 +26,10 @@ function App() {
     )
   )
 
-  function createUser(name) {
-    postUser(name).then(setUser).catch(setError)
+  function createUser(user) {
+    postUser(user)
+      .then(data => console.log(data.user))
+      .catch(setError)
   }
 }
 

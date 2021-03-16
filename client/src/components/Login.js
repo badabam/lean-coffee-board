@@ -25,7 +25,11 @@ export default function Login({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    onSubmit(event.target.elements.name.value || randomName)
+    onSubmit({
+      password: '2Hamburg',
+      username: 'Dumbledore',
+      email: 'dum@bledore.com',
+    })
   }
 }
 
