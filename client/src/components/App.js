@@ -7,7 +7,7 @@ import Board from './Board'
 import Login from './Login'
 
 function App() {
-  const [user, setUser] = useState(loadFromLocal([]))
+  const [user, setUser] = useState(loadFromLocal({}))
   const [error, setError] = useState(null)
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function App() {
 
   function createUser(user) {
     postUser(user)
-      .then(data => console.log(data.user))
+      .then(data => setUser({ username: data.user.username, token: data.jwt }))
       .catch(setError)
   }
 }
