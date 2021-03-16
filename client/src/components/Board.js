@@ -10,7 +10,7 @@ import Card from './Card'
 
 Board.propTypes = {
   user: PropTypes.shape({
-    name: PropTypes.string,
+    username: PropTypes.string,
     _id: PropTypes.string,
   }),
   onLogout: PropTypes.func,
@@ -72,9 +72,10 @@ export default function Board({ user, onLogout }) {
 
   function handleSubmit(event) {
     event.preventDefault()
+    console.log(user)
     const form = event.target
     const { text } = form.elements
-    postCard({ text: text.value, author: user._id }).then(newCard =>
+    postCard({ text: text.value, author: user.id }).then(newCard =>
       setCards([newCard, ...cards])
     )
     form.reset()

@@ -28,7 +28,13 @@ function App() {
 
   function createUser(user) {
     postUser(user)
-      .then(data => setUser({ username: data.user.username, token: data.jwt }))
+      .then(data =>
+        setUser({
+          username: data.user.username,
+          token: data.jwt,
+          id: data.user.id,
+        })
+      )
       .catch(setError)
   }
 }
