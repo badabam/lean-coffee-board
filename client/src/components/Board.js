@@ -11,6 +11,7 @@ import Card from './Card'
 Board.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string,
+    token: PropTypes.string,
     _id: PropTypes.string,
   }),
   onLogout: PropTypes.func,
@@ -20,7 +21,7 @@ export default function Board({ user, onLogout }) {
   const [cards, setCards] = useState([])
 
   useEffect(() => {
-    getCards().then(data => setCards([...data]))
+    getCards(user.token).then(data => setCards([...data]))
   }, [])
 
   return (
@@ -65,8 +66,8 @@ export default function Board({ user, onLogout }) {
 
     // we use finally here to get the cards in both cases: if the update returned
     // successfully or with an error:
-    voteCard(card._id).finally(() => {
-      getCards().then(cards => setCards(cards))
+    voteCard(card._id, user.token).finally(() => {
+      getCards(user.token).then(cards => setCards(cards))
     })
   }
 
@@ -75,7 +76,7 @@ export default function Board({ user, onLogout }) {
 
     const form = event.target
     const { text } = form.elements
-    postCard({ text: text.value, author: user.id }).then(newCard =>
+    postCard({ text: text.value, author: user.id }, user.token).then(newCard =>
       setCards([newCard, ...cards])
     )
     form.reset()
@@ -83,7 +84,7 @@ export default function Board({ user, onLogout }) {
   }
 
   function handleDelete(id) {
-    deleteCard(id).then(() => {
+    deleteCard(id, user.token).then(() => {
       const updatedCards = cards.filter(card => card._id !== id)
       setCards([...updatedCards])
     })
