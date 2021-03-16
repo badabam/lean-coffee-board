@@ -1,5 +1,5 @@
 export default function postCard(card) {
-  return fetch('/api/cards', {
+  return fetch('/cards', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

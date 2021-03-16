@@ -1,5 +1,5 @@
 export default function voteCard(id) {
-  return fetch(`/api/cards/${id}/vote`, {
+  return fetch(`/cards/${id}/vote`, {
     method: 'PATCH',
     headers: {
       'content-type': 'application/json',
