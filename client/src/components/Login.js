@@ -5,6 +5,11 @@ import Button from './Button'
 
 export default function Login({ onSubmit }) {
   const [randomName, setRandomName] = useState('')
+  const [user, setUser] = useState({
+    username: '',
+    email: '',
+    password: '',
+  })
 
   useEffect(() => {
     getRandomName()
@@ -16,34 +21,47 @@ export default function Login({ onSubmit }) {
     <Form onSubmit={handleSubmit}>
       <label>
         Choose a name:
-        <input name="name" placeholder={randomName} />
+        <input
+          onChange={handleChange}
+          value={user.username}
+          name="username"
+          placeholder={randomName}
+        />
       </label>
       <label>
         Your email:
         <input
+          onChange={handleChange}
           name="email"
           type="email"
+          value={user.email}
           placeholder={`${randomName}@coffee.de`}
         />
       </label>
       <label>
         A password:
-        <input name="password" type="password" placeholder="..." />
+        <input
+          onChange={handleChange}
+          value={user.password}
+          name="password"
+          type="password"
+          placeholder="..."
+        />
       </label>
 
       <Button>Let's go!</Button>
     </Form>
   )
 
+  function handleChange(event) {
+    const name = event.target.name
+    const value = event.target.value
+    setUser({ ...user, [name]: value })
+  }
+
   function handleSubmit(event) {
     event.preventDefault()
-    const form = event.target
-    const { name, email, password } = form.elements
-    onSubmit({
-      password: password.value,
-      username: name.value,
-      email: email.value,
-    })
+    onSubmit(user)
   }
 }
 
