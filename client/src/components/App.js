@@ -10,9 +10,9 @@ import Login from './Login'
 import loginUser from '../services/loginUser'
 
 function App() {
-  const [user, setUser] = useState(loadFromLocal({}))
+  const [user, setUser] = useState(loadFromLocal('user'))
   const [error, setError] = useState(null)
-  const [registered, setRegistered] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false)
   const errorMessages = JSON.stringify(error?.message, null, 2)
 
   useEffect(() => {
@@ -25,20 +25,22 @@ function App() {
         <pre>{errorMessages}</pre>
       </Error>
       {user ? (
-        <Board user={user} onLogout={() => setUser(null)} />
+        <Board user={user} onLogout={() => setUser(null)} onError={setError} />
       ) : (
         <>
-          {registered ? (
+          {isRegistered ? (
             <Login onLogin={handleLoginUser} />
           ) : (
             <Register onRegister={createUser} />
           )}
-          <LogInButton type="button" onClick={() => setRegistered(!registered)}>
-            <small>
-              {registered
-                ? "You don't have a user? Register here!"
-                : 'Allready registered? Click here to log in!'}
-            </small>
+          <LogInButton
+            type="button"
+            onClick={() => setIsRegistered(!isRegistered)}
+            css="font-size: smaller"
+          >
+            {isRegistered
+              ? "You don't have a user? Register here!"
+              : 'Allready isRegistered? Click here to log in!'}
           </LogInButton>
         </>
       )}

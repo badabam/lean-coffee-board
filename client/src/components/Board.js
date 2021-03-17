@@ -17,12 +17,14 @@ Board.propTypes = {
   onLogout: PropTypes.func,
 }
 
-export default function Board({ user, onLogout }) {
+export default function Board({ user, onLogout, onError }) {
   const [cards, setCards] = useState([])
 
   useEffect(() => {
-    getCards(user.token).then(data => setCards([...data]))
-  }, [user.token])
+    getCards(user.token)
+      .then(data => setCards([...data]))
+      .catch(onError)
+  }, [user.token, onError])
 
   return (
     <BoardWrapper>
@@ -76,9 +78,9 @@ export default function Board({ user, onLogout }) {
 
     const form = event.target
     const { text } = form.elements
-    postCard({ text: text.value, author: user.id }, user.token).then(newCard =>
-      setCards([newCard, ...cards])
-    )
+    postCard({ text: text.value, author: user.id }, user.token)
+      .then(newCard => setCards([newCard, ...cards]))
+      .catch(onError)
     form.reset()
     text.focus()
   }
