@@ -11,7 +11,9 @@ import loginUser from '../services/loginUser'
 
 function App() {
   const [user, setUser] = useState(loadFromLocal({}))
+  const [error, setError] = useState(null)
   const [registered, setRegistered] = useState(false)
+  const errorMessages = JSON.stringify(error?.message, null, 2)
 
   useEffect(() => {
     saveToLocal('user', user)
@@ -19,6 +21,9 @@ function App() {
 
   return (
     <Grid loggedOut={!user}>
+      <Error onClick={() => setError(null)} isVisible={error}>
+        <pre>{errorMessages}</pre>
+      </Error>
       {user ? (
         <Board user={user} onLogout={() => setUser(null)} />
       ) : (
@@ -54,7 +59,7 @@ function App() {
           id: data.user.id,
         })
       )
-      .catch(error => console.log('error -----', error))
+      .catch(setError)
   }
 
   function createUser(user) {
@@ -66,9 +71,21 @@ function App() {
           id: data.user.id,
         })
       )
-      .catch(error => console.log('error -----', error))
+      .catch(setError)
   }
 }
+
+const Error = styled.aside`
+  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  box-shadow: 0 4px 6px #0006;
+  color: tomato;
+  background: white;
+`
 
 const Grid = styled.div`
   display: grid;
