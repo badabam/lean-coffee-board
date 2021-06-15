@@ -20,29 +20,29 @@ export default function Board({ user, onLogout }) {
   const [cards, setCards] = useState([])
 
   useEffect(() => {
-    getCards().then(data => setCards([...data]))
+    getCards()
+      .then(data => setCards([...data]))
+      .catch(error => console.error(error))
   }, [])
 
-  const compareCreatedDescending = (a, b) => a.createdAt < b.createdAt ? 1 : -1
+  const compareCreatedDescending = (a, b) =>
+    a.createdAt < b.createdAt ? 1 : -1
 
   return (
     <BoardWrapper>
       <Logout onClick={onLogout} />
       <CardGrid>
-        {cards
-          .sort(compareCreatedDescending)
-          .map(card => {console.log(card); return card})
-          .map((card, index) => (
-            <Card
-              key={card._id}
-              authorColor={card.author?.color}
-              text={card.text}
-              name={card.author?.name}
-              votes={card.votes}
-              onDelete={() => handleDelete(card._id)}
-              onVote={() => handleVote(index)}
-            />
-          ))}
+        {cards.sort(compareCreatedDescending).map((card, index) => (
+          <Card
+            key={card._id}
+            authorColor={card.author?.color}
+            text={card.text}
+            name={card.author?.name}
+            votes={card.votes}
+            onDelete={() => handleDelete(card._id)}
+            onVote={() => handleVote(index)}
+          />
+        ))}
         <Spacer />
       </CardGrid>
       <Form onSubmit={handleSubmit}>
