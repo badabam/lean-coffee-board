@@ -11,9 +11,9 @@ export default {
 
 const Template = args => <Card {...args} />
 
-export const Primary = Template.bind({})
+export const Default = Template.bind({})
 
-Primary.args = {
+Default.args = {
   authorColor: 'hotpink',
   text: 'This is an example',
   name: 'Rick Sanchez',

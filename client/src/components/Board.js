@@ -1,3 +1,4 @@
+// @ts-check
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
@@ -23,12 +24,15 @@ export default function Board({ user, onLogout }) {
     getCards().then(data => setCards([...data]))
   }, [])
 
+  const compareCreatedDescending = (a, b) => a.createdAt < b.createdAt ? 1 : -1
+
   return (
     <BoardWrapper>
       <Logout onClick={onLogout} />
       <CardGrid>
         {cards
-          .sort((a, b) => b.votes - a.votes)
+          .sort(compareCreatedDescending)
+          .map(card => {console.log(card); return card})
           .map((card, index) => (
             <Card
               key={card._id}
